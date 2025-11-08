@@ -6,7 +6,7 @@ const connectDB = require("../../db/connect");
 const Order = require("../../models/Order");
 
 const placeOrder = asyncWrapper(async (req, res) => {
-  const { address, cartItems, price, delivery, customerInfo } = req.body;
+  const { address, cartItems, price, delivery, customerInfo, km } = req.body;
 
   // Verify user token
   const token = req.headers.authorization?.split(' ')[1];
@@ -21,6 +21,7 @@ const placeOrder = asyncWrapper(async (req, res) => {
     totalPrice:price,
     delivery,
     customerInfo, // save customer info object
+    km
   });
 
   await newOrder.save();

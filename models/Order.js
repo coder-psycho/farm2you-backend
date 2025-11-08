@@ -23,6 +23,7 @@ const orderSchema = new Schema(
     cartItems: { type: [Schema.Types.Mixed], default: [] },
     totalPrice: { type: Number, required: true },
     delivery: { type: Number, required: true },
+    km: { type: Number, required: true },
   },
   { timestamps: true }
 );
