@@ -7,29 +7,23 @@ const User = require("../../models/User");
 
 const signup = asyncWrapper(async (req, res) => {
 
-    const { email, username, name, password, userType } = req.body;
-    console.log(email, username, name, password, userType);
+    const { role, username, password } = req.body;
+    console.log(username, role, password);
 
-    if (!email || !username || !name || !password || !userType) {
-        return res.status(400).json({ type: "error", message: "Email, name, user type, and password are required." });
+    if (!role || !username || !password) {
+        return res.status(400).json({ type: "error", message: "Username, role and password are required." });
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        return res.status(400).json({ type: "error", message: "Valid email is required." });
-    }
 
 
     const existingUser = await User.findOne({
-        $or: [{ email }, { username }]
+        $or: [{ username }]
     });
 
     if (existingUser) {
         return res.status(400).json({
             type: "error",
-            message: existingUser.email === email
-                ? "Email already registered."
-                : "Username already taken."
+            message: "Username already taken."
         });
     }
 
@@ -40,10 +34,8 @@ const signup = asyncWrapper(async (req, res) => {
 
 
         const user = new User({
-            userType,
-            email,
+            role,
             password: hashedPassword,
-            fullName: name,
             username
         });
 

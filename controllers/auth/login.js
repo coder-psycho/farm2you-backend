@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 const asyncWrapper = require("../../middleware/async");
 const connectDB = require("../../db/connect");
-// Helper function to parse user agent
+
 
 
 const login = asyncWrapper(async (req, res) => {

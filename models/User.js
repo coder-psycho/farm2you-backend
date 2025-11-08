@@ -5,45 +5,16 @@ const users = new Schema({
   username: {
     type: String,
     unique: true,
-    required: true
-  },
-  email: {
-    type: String,
-    unique: true,
     required: true,
-    trim: true,
-        match: [/.+\@.+\..+/, 'Please enter a valid email address']
-   },
+    unique: true
+  },
   password: {
     type: String
   },
-  avatar: {
+  role: {
     type: String,
-  },
-  fullName: {
-    type: String,
-  },
-  bio: {
-    type: String,
-  },
-  userType: {
-    type: String,
-    enum: ['founder', 'investor', 'admin'],
+    enum: ['user', 'farmer', 'transporter'],
     required: true
-  },
-  resetOtp: {
-    type: String,
-  },
-  
-  resetOtpExpires: {
-    type: Date,
-  },
-  
-  resetSessionToken: {
-    type: String,
-  },
-  resetSessionExpires: {
-    type: Date,
   }
 }, { timestamps: true });
 
