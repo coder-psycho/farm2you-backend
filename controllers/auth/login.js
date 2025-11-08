@@ -26,7 +26,7 @@ const login = asyncWrapper(async (req, res) => {
         // Generate JWT token with expiration
         const expirationTime = '1d'; // 1 day
         var token = jwt.sign(
-            { userId: user._id, email: user.email }, 
+            { userId: user._id, username: user.username }, 
             process.env.JWT_SECRET_KEY, 
             { expiresIn: expirationTime }
         );
@@ -35,7 +35,7 @@ const login = asyncWrapper(async (req, res) => {
         const newUser = {
             userId: user._id,
             username: user.username,
-            email: user.email,
+            role: user.role,
         };
 
         return res.status(200).json({ 

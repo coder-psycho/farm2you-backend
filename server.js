@@ -56,6 +56,7 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/api/v1/auth', require('./routes/auth'));
+app.use('/api/v1/product', require('./routes/product'));
 
 
 app.get('/', (req, res) => {
