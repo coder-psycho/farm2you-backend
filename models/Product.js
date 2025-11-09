@@ -11,6 +11,10 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
+  variety: {
+    type: String,
+    required: true
+  },
   qty: {
     type: Number,
     required: true
@@ -24,7 +28,12 @@ const productSchema = new Schema({
   images: {
     type: [String], 
     default: []
-  }
+  },
+  embedding: {
+  type: [Number],
+  required: false
+}
+
 }, { timestamps: true });
 
 module.exports = mongoose.model("Product", productSchema);
