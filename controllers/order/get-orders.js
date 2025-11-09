@@ -25,51 +25,22 @@ const getDistance = async (user, farmer) => {
 }
 
 
-const placeOrder = asyncWrapper(async (req, res) => {
-  const { address, cartItems, price, delivery, customerInfo, km } = req.body;
-
+const getOrders = asyncWrapper(async (req, res) => {
   // Verify user token
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ type: "error", message: "Unauthorized" });
 
   const verification = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
+  let orders = await Order.find({
+    user: verification.userId
+  }).populate("user").populate("transporter")
 
-  const transporters = await User.find({ role: "transporter" });
-
-  const kms = await Promise.all(
-  transporters.map(t => getDistance(address, t.address))
-);
-
-let max = kms[0];
-let maxIndex = 0;
-
-for (let i = 1; i < kms.length; i++) {
-  if (kms[i] > max) {
-    max = kms[i];
-    maxIndex = i;
-  }
-}
-console.log(kms)
-
-let newOrder = new Order({
-  user: verification.userId,
-  address,
-  cartItems,
-  totalPrice: price,
-  delivery,
-  customerInfo,
-  km: max, // save distance
-  transporter: transporters[maxIndex]._id
-});
-
-  await newOrder.save();
 
   return res.status(200).json({
     type: "success",
-    message: "Order placed successfully",
-    orderId: newOrder._id
+    orders: orders
   });
 });
 
-module.exports = placeOrder;
+module.exports = getOrders;

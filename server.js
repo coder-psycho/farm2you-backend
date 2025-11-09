@@ -60,6 +60,7 @@ app.use('/api/v1/product', require('./routes/product'));
 app.use('/api/v1/farmer', require('./routes/farmer'));
 app.use('/api/v1/order', require('./routes/order'));
 app.use('/api/v1/chat', require('./routes/chat'));
+app.use('/api/v1/transporter', require('./routes/transporter'));
 
 
 app.get('/', (req, res) => {
